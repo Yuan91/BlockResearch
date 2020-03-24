@@ -956,9 +956,16 @@ __Block_byref_a_0 *__forwarding;
 
 ## __block 修改对象类型分析
 
-基本原理与__block 修饰基本数据类型一致，__block修饰的对象类型被编译后的源码，也是一个结构体，只不过这个结构体内部多一个copy和dispose函数。会在适当的时机对变量进行 copy 和 dispose 操作
+基本原理与__block 修饰基本数据类型一致，__block修饰的对象类型被编译后的源码，也是一个结构体，只不过这个**结构体内部多一个copy和dispose函数**。会在适当的时机对变量进行 copy 和 dispose 操作
 
 ![avatar](https://s1.ax1x.com/2020/03/22/8IvgL4.md.png)
+
+block 进行copy时
+
+![avatar](https://s1.ax1x.com/2020/03/25/8OwpnS.png)
+
+block 进行dispose时
+![avatar](https://s1.ax1x.com/2020/03/25/8OwaHe.md.png )
 
 //测试代码
 ```
@@ -1044,7 +1051,7 @@ static void __Block_byref_id_object_copy_131(void *dst, void *src) {
  ![avatar](https://s1.ax1x.com/2020/03/22/8IzTqe.png)
 
  MRC 下解决循环引用
- ![avatar](https://s1.ax1x.com/2020/03/22/8IzHVH.png)
+ ![avatar](https://s1.ax1x.com/2020/03/25/8OdlSP.png)
  
  ### ARC 下
 
