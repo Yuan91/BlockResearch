@@ -106,8 +106,8 @@ struct __AtAutoreleasePool {
 };
 
 #define __OFFSETOFIVAR__(TYPE, MEMBER) ((long long) &((TYPE *)0)->MEMBER)
-static __NSConstantStringImpl __NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_6d6712_mi_0 __attribute__ ((section ("__DATA, __cfstring"))) = {__CFConstantStringClassReference,0x000007c8,"-->%@",5};
-static __NSConstantStringImpl __NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_6d6712_mi_1 __attribute__ ((section ("__DATA, __cfstring"))) = {__CFConstantStringClassReference,0x000007c8,"Person dealloc",14};
+static __NSConstantStringImpl __NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_feea88_mi_0 __attribute__ ((section ("__DATA, __cfstring"))) = {__CFConstantStringClassReference,0x000007c8,"-->%@",5};
+static __NSConstantStringImpl __NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_feea88_mi_1 __attribute__ ((section ("__DATA, __cfstring"))) = {__CFConstantStringClassReference,0x000007c8,"Person dealloc",14};
 
 
 
@@ -33863,7 +33863,7 @@ struct __Person__test_block_impl_0 {
 static void __Person__test_block_func_0(struct __Person__test_block_impl_0 *__cself) {
   Person *const __strong self = __cself->self; // bound by copy
 
-        NSLog((NSString *)&__NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_6d6712_mi_0,self);
+        NSLog((NSString *)&__NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_feea88_mi_0,self);
     }
 static void __Person__test_block_copy_0(struct __Person__test_block_impl_0*dst, struct __Person__test_block_impl_0*src) {_Block_object_assign((void*)&dst->self, (void*)src->self, 3/*BLOCK_FIELD_IS_OBJECT*/);}
 
@@ -33874,15 +33874,24 @@ static struct __Person__test_block_desc_0 {
   size_t Block_size;
   void (*copy)(struct __Person__test_block_impl_0*, struct __Person__test_block_impl_0*);
   void (*dispose)(struct __Person__test_block_impl_0*);
-} __Person__test_block_desc_0_DATA = { 0, sizeof(struct __Person__test_block_impl_0), __Person__test_block_copy_0, __Person__test_block_dispose_0};
+} __Person__test_block_desc_0_DATA = {
+    0,
+    sizeof(struct __Person__test_block_impl_0),
+    __Person__test_block_copy_0,
+    __Person__test_block_dispose_0};
 
 static void _I_Person_test(Person * self, SEL _cmd) {
-    void (*block)(void) = ((void (*)())&__Person__test_block_impl_0((void *)__Person__test_block_func_0, &__Person__test_block_desc_0_DATA, self, 570425344));
+    
+    void (*block)(void) = &__Person__test_block_impl_0(
+                                                       __Person__test_block_func_0,
+                                                       &__Person__test_block_desc_0_DATA,
+                                                       self,
+                                                       570425344));
 }
 
 
 static void _I_Person_dealloc(Person * self, SEL _cmd) {
-    NSLog((NSString *)&__NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_6d6712_mi_1);
+    NSLog((NSString *)&__NSConstantStringImpl__var_folders_31_0q48nsjs4cd2wxgr2x_t0p980000gn_T_Person_feea88_mi_1);
 }
 
 

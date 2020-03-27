@@ -231,16 +231,44 @@
 //    return 0;
 //}
 
+//MARK:- __block 修饰对象类型
+//typedef void(^XXBlock)(void);
+//int main(int argc, const char * argv[]) {
+//    @autoreleasepool {
+//        __block Person * p = [[Person alloc]init];
+//        XXBlock block = ^{
+//            NSLog(@"--->%@",p);
+//
+//        };
+//
+//        block();
+//    }
+//    return 0;
+//}
+
+//测试代码
 typedef void(^XXBlock)(void);
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        __block Person * p = [[Person alloc]init];
+         int a = 10;
+//        Person * p = [[Person alloc]init];
+//        int b = 10;
+        static int c = 10;
+//        NSLog(@"原始%p",&a);
+//        NSLog(@"原始变量P的地址:%p",&a);
+//        NSLog(@"------:%p",a);
         XXBlock block = ^{
-            NSLog(@"--->%@",p);
-            
+//            a = 20;
+//            p = nil;
+            NSLog(@"%d",a);
+            NSLog(@"%d",c);
+//            NSLog(@"block内%p",&a);
+//            NSLog(@"block内P的地址:%p",&a);
+//            NSLog(@"=======:%p",a);
         };
         
         block();
     }
     return 0;
 }
+

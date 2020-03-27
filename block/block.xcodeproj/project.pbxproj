@@ -38,6 +38,8 @@
 		8198DBF2242674DE00C3F1E6 /* 8修改外部变量.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "8修改外部变量.cpp"; sourceTree = "<group>"; };
 		8198DBF42426FDE700C3F1E6 /* 9访问block修改的变量.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "9访问block修改的变量.cpp"; sourceTree = "<group>"; };
 		8198DBF624275F5100C3F1E6 /* 10block修饰对象类型.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "10block修饰对象类型.cpp"; sourceTree = "<group>"; };
+		81B024C7242DED64001CBD10 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		81B024C8242E0B8A001CBD10 /* Person.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Person.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,8 @@
 				8198DBD82425C30300C3F1E6 /* main.m */,
 				8198DBE92425FE3800C3F1E6 /* Person.h */,
 				8198DBEA2425FE3800C3F1E6 /* Person.m */,
+				81B024C7242DED64001CBD10 /* main.cpp */,
+				81B024C8242E0B8A001CBD10 /* Person.cpp */,
 			);
 			path = block;
 			sourceTree = "<group>";
