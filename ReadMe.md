@@ -22,9 +22,9 @@ Block 本质也是一个OC对象，它封装了函数调用以及函数调用环
 
 * 如果block在栈上，将不会对auto变量产生强引用
 
-* 如果block被拷贝到堆上，会调用 _block_object_assign 函数，该函数根据auto变量的修饰符类型进行相应的内存操作 如果是 __strong 会对 auto 变量进行强引用；如果是 __weak 则仅仅是指向该变量
+* 如果block被拷贝到堆上，会调用 block 的copy 函数，进而调用 _block_object_assign 函数，该函数根据auto变量的修饰符类型进行相应的内存操作 如果是 __strong 会对 auto 变量进行强引用；如果是 __weak 则仅仅是指向该变量
 
-* 如果block从堆上移除时， 会调用 _block_object_dispose函数，对捕获的变量进行响应的内存操作
+* 如果block从堆上移除时，会调用block 的 dispose 函数，进而 调用 _block_object_dispose函数，对捕获的变量进行响应的内存操作
 
 ## Block类型的分析
 
@@ -477,7 +477,7 @@ block对于其中变量的捕获与否，主要是存内存方面考虑的。
 
 * 如果block在栈上，将不会对auto变量产生强引用
 
-* 如果block被拷贝到堆上，会调用 _block_object_assign 函数，该函数根据auto变量的修饰符类型进行相应的内存操作
+* 如果block被拷贝到堆上，会调用block 的copy函数，进而调用  _block_object_assign 函数，该函数根据auto变量的修饰符类型进行相应的内存操作
 如果是 __strong 会对 auto 变量进行强引用；如果是 __weak 则仅仅是指向该变量
 
 * 如果block从堆上移除时， 会调用 _block_object_dispose函数，对捕获的变量进行响应的内存操作
@@ -513,7 +513,16 @@ int main(int argc, const char * argv[]) {
 
 ```
 
-//源码分析
+### ARC下Block对访问的对象类型变量的强引用分析
+
+参考上面的代码，我们发现Block被赋值给一个__strong类型的变量`block`。
+①在ARC下系统会对该block进行copy，将其类型修改为`mallocblock`
+②同时会调用block的copy函数，进而调用_block_object_assign_函数将访问的对象类型变量引用计数加一。
+③block对应的结构体内部会持有一个__strong 描述的变量
+以上分析，建立在对象类型是__strong描述的，如果是__weak描述的则不会进行引用计数加1
+
+
+### 源码分析
 
 `xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc -fobjc-arc -fobjc-runtime=ios-8.0.0 main.m`
 
@@ -565,16 +574,25 @@ static struct __main_block_desc_0 {
   void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);
     //对应 __main_block_dispose_0 函数
   void (*dispose)(struct __main_block_impl_0*);
-} __main_block_desc_0_DATA = { 0, sizeof(struct __main_block_impl_0), __main_block_copy_0, __main_block_dispose_0};
+} __main_block_desc_0_DATA = { 
+    0, 
+sizeof(struct __main_block_impl_0), 
+__main_block_copy_0,
+ __main_block_dispose_0};
 
 //4.接下来看这两个函数的内容
 
 //当block被拷贝时会调用 __main_block_copy_0 函数
 //该函数最终调用 _Block_object_assign 方法,依据auto变量是strong还是weak进行内存管理操作
-static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) {_Block_object_assign((void*)&dst->p, (void*)src->p, 3/*BLOCK_FIELD_IS_OBJECT*/);}
+static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) {
+    _Block_object_assign((void*)&dst->p, 
+    (void*)src->p, 
+    3/*BLOCK_FIELD_IS_OBJECT*/);}
 
 //最终调用 _Block_object_dispose
-static void __main_block_dispose_0(struct __main_block_impl_0*src) {_Block_object_dispose((void*)src->p, 3/*BLOCK_FIELD_IS_OBJECT*/);}
+static void __main_block_dispose_0(struct __main_block_impl_0*src) {
+    _Block_object_dispose((void*)src->p, 
+    3/*BLOCK_FIELD_IS_OBJECT*/);}
 
 ```
 
